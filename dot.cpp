@@ -38,11 +38,14 @@ void print_tensor(
     std::array<std::array<std::array<double, Dim>, Dim>, Dim> tensor) {
   std::cout << "[";
   for (size_t i = 0; i < Dim; ++i) {
-    print_array(tensor[i]);
-    if (i < Dim - 1) {
-      std::cout << ",\n";
-    } else {
-      std::cout << "]\n";
+    for (size_t j = 0; j < Dim; ++j) {
+      print_array(tensor[i][j]);
+
+      if (i < Dim - 1) {
+        std::cout << ",\n";
+      } else {
+        std::cout << "]\n";
+      }
     }
   }
 }
@@ -52,11 +55,15 @@ void print_tensor(
         tensor) {
   std::cout << "[";
   for (size_t i = 0; i < Dim; ++i) {
-    print_array(tensor[i]);
-    if (i < Dim - 1) {
-      std::cout << ",\n";
-    } else {
-      std::cout << "]\n";
+    for (size_t j = 0; j < Dim; ++j) {
+      for (size_t k = 0; k < Dim; ++k) {
+        print_array(tensor[i][j][k]);
+        if (i < Dim - 1) {
+          std::cout << ",\n";
+        } else {
+          std::cout << "]\n";
+        }
+      }
     }
   }
 }
@@ -94,13 +101,13 @@ int main() {
       }
     }
   }
- // Matrix_new1 is where the problems are
+
   std::array<std::array<std::array<double, 3>, 3>, 3> matrix_new1;
   for (size_t i = 0; i < 3; ++i) {
     for (size_t j = 0; j < 3; ++j) {
-      for (size_t k = 0; k < 3; ++k) {
-        for (size_t ib = 0; ib < 3; ++ib) {
-          for (size_t jb = 0; jb < 3; ++jb) {
+      for (size_t ib = 0; ib < 3; ++ib) {
+        for (size_t jb = 0; jb < 3; ++jb) {
+          for (size_t k = 0; k < 3; ++k) {
             for (size_t kb = 0; kb < 3; ++kb) {
               matrix_new1[ib][jb][kb] += rotation_3D[ib][i] *
                                          rotation_3D[jb][j] *
@@ -111,6 +118,7 @@ int main() {
       }
     }
   }
+
   std::array<double, 4> vector_nest;
   vector_a[0] = 0.0;
   vector_a[1] = 0.0;
@@ -121,10 +129,8 @@ int main() {
   print_tensor(vector_a);
   print_tensor(vector_b);
   print_tensor(vector_c);
-  print_tensor(matrix_new);
   print_tensor(matrix_new1);
-  print_tensor(vector_nest);
-  print_tensor(matrix_3x3[2]);
+
   return 0;
 }
 
