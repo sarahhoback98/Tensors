@@ -1,5 +1,9 @@
+#include <math.h>  /* sin */
+#include <stdio.h> /* printf */
 #include <array>
 #include <iostream>
+
+#define PI 3.14159265
 
 template <size_t Dim>
 void print_array(std::array<double, Dim> vector) {
@@ -77,11 +81,22 @@ int main() {
 
   std::array<double, 3> vector_b{{2.0 / 3.0, 444.0, 4444.0}};
 
+  double theta1, theta2, theta3;
+  theta1 = 2 * PI / 4;
+  theta2 = 2 * PI / 2;
+  theta3 = 2 * PI / 6;
+
   std::array<std::array<double, 3>, 3> rotation_3D{
-      {{0.0, -1.0, 0.0}, {1.0, 0.0, 0.0}, {0.0, 0.0, 1.0}}};
+      {{cos(theta1) * cos(theta2), cos(theta2) * sin(theta1), -sin(theta2)},
+       {cos(theta1) * sin(theta2) * sin(theta3) - cos(theta3) * sin(theta1),
+        cos(theta1) * cos(theta3) + sin(theta1) * sin(theta2) * sin(theta3),
+        cos(theta2) * sin(theta3)},
+       {cos(theta1) * cos(theta3) * sin(theta2) + sin(theta1) * sin(theta3),
+        cos(theta3) * sin(theta1) * sin(theta2) - cos(theta1) * sin(theta3),
+        cos(theta2) * cos(theta3)}}};
 
   std::array<std::array<double, 3>, 3> matrix_3x3{
-      {{1.0, -1.0, 3.0}, {1.0, 2.0, 1.0}, {1.0, 1.0, 1.0}}};
+      {{0.0, 0.0, 3.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}}};
 
   std::array<double, 3> vector_c{{0.0, 0.0, 0.0}};
   for (size_t i = 0; i < 3; ++i) {
@@ -119,18 +134,11 @@ int main() {
     }
   }
 
-  std::array<double, 4> vector_nest;
-  vector_a[0] = 0.0;
-  vector_a[1] = 0.0;
-  vector_a[2] = 0.0;
-  vector_a[3] = 0.0;
-
   print_tensor(rotation_3D);
-  print_tensor(vector_a);
-  print_tensor(vector_b);
-  print_tensor(vector_c);
+  std::cout << "\n\n";
+  print_tensor(matrix_new);
+  std::cout << "\n\n";
   print_tensor(matrix_new1);
-
   return 0;
 }
 
